@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'Task_list.dart';
+import 'AddTaskScreen.dart';
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
 
@@ -44,6 +45,15 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.transparent,
           toolbarHeight: 80,
         ),
+        body: Container(
+          child: Column(
+            children: [
+              Expanded(
+                child: TaskList(),
+                ),
+            ],
+          ),
+        ),
         bottomNavigationBar: BottomAppBar(
           elevation: 0,
           color: Colors.transparent,
@@ -53,11 +63,25 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children : <Widget>[
                 Icon(Icons.house, color: Colors.white, size: 45,),
-                CircleAvatar(
-                  radius: 30,
-                  child: Icon(Icons.add, color: Colors.white,size: 35),
-                  backgroundColor: Colors.purple.shade400,
-                  ),
+                FlatButton(
+                  onPressed: () {
+                  showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (context) => SingleChildScrollView(
+                      child:Container(
+                      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                      child: AddTaskScreen(),
+                    )
+                    )
+                    );
+                    },
+                    child: CircleAvatar(
+                    radius: 30,
+                    child: Icon(Icons.add, color: Colors.white,size: 35),
+                    backgroundColor: Colors.purple.shade400,
+                    ),
+                ),
                 Icon(Icons.settings, color: Colors.white,size: 45)
               ]
             ),
