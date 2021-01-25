@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 import 'my_check_box.dart';
-class TaskTile extends StatelessWidget {
+class TaskTile extends StatefulWidget {
   final bool isChecked; 
   final String title;
-  TaskTile({this.isChecked, this.title});
+  final Function checkboxCallback;
+  final Function longPressCallback;
+  TaskTile({this.isChecked, this.title, this.checkboxCallback, this.longPressCallback});
+
+  @override
+  _TaskTileState createState() => _TaskTileState();
+}
+
+class _TaskTileState extends State<TaskTile> {
+  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -11,21 +20,55 @@ class TaskTile extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          MyCheckBox(isChecked: isChecked),
+          Container(
+             decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15)
+            ),
+          child: ClipRRect(
+             clipBehavior: Clip.hardEdge,
+             borderRadius: BorderRadius.all(Radius.circular(5)),
+             child: SizedBox(
+                width: Checkbox.width,
+                height: Checkbox.width,
+              child: Container(
+                decoration: new BoxDecoration(
+                  border: Border.all(
+                  width: 1,
+                  ),
+                borderRadius: new BorderRadius.circular(5),
+                ),
+               child: Theme(
+              data: ThemeData(
+                unselectedWidgetColor: Color(0xFF292E3C),
+              ),
+             child: Checkbox(
+              value: widget.isChecked,
+              onChanged: widget.checkboxCallback,
+              activeColor: Color(0xFF65FFA7),
+              materialTapTargetSize: MaterialTapTargetSize.padded,
+                ),
+                  ),
+              ),
+            ),
+           ),
+          ),
           SizedBox(width : 10),
           Expanded(
-              child: Container(
-              
-              height: 50,
-              decoration: BoxDecoration(
-                borderRadius : BorderRadius.circular(15),
-                color: Color(0xFF292E3C)
-              ),
-              child: Text(
-                title,
-                style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+              child: GestureDetector(
+                onLongPress: widget.longPressCallback,
+                child: Container(
+                
+                height: 50,
+                decoration: BoxDecoration(
+                  borderRadius : BorderRadius.circular(15),
+                  color: Color(0xFF292E3C),
                 ),
+                child: Text(
+                  widget.title != null?widget.title:'',
+                  style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
             ),
+              ),
           ),
         ],
       ),

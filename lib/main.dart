@@ -13,6 +13,10 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => TaskData(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+        cursorColor: Colors.purple.shade400,
+        ),
         home: HomePage(),
       ),
       );
