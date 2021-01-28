@@ -2,12 +2,13 @@ import 'package:flutter/foundation.dart';
 import 'Task.dart';
 import 'dart:collection';
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 class TaskData extends ChangeNotifier{
   List<Task> _tasks = [
-    Task(title :'morning run'),
-    Task(title :'daily workout'),
-    Task(title :'go to the gym')
+    // Task(title :'morning run',),
+    // Task(title :'daily workout'),
+    // Task(title :'go to the gym')
   ];
   Color tileColor = Color(0xFF292E3C);
 
@@ -19,8 +20,8 @@ class TaskData extends ChangeNotifier{
     return _tasks.length;
   }
 
-   void addTask(String newTaskTitle) {
-    final task = Task(title: newTaskTitle);
+   void addTask(String newTaskTitle, String formatedDate) {
+    final task = Task(title: newTaskTitle, taskDate: formatedDate);
     _tasks.add(task);
     notifyListeners();
   }
@@ -35,5 +36,16 @@ class TaskData extends ChangeNotifier{
     _tasks.remove(task);
     notifyListeners();
   }
+
+  final StreamController _controller =
+      StreamController<Map<String, dynamic>>();
+
+  Stream<Map<String, dynamic>> get taskStream => _controller.stream;
+
+  addTask1(String title, String date) {
+    _controller.add({'title': title, 'date': date});
+  }
+
+
 
 }

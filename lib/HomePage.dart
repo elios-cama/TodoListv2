@@ -64,8 +64,8 @@ class _HomePageState extends State<HomePage> {
               children : <Widget>[
                 Icon(Icons.house, color: Colors.white, size: 45,),
                 FlatButton(
-                  onPressed: () {
-                  showModalBottomSheet(
+                  onPressed: () async{
+                   await showModalBottomSheet(
                       
                       
                       context: context,
@@ -77,7 +77,9 @@ class _HomePageState extends State<HomePage> {
                     )
                     )
                     );
+                    setState(() {});
                     },
+
                     child: CircleAvatar(
                     radius: 30,
                     child: Icon(Icons.add, color: Colors.white,size: 35),
